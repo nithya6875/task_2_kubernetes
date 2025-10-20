@@ -94,12 +94,14 @@ This repo includes manifests under `k8s/`:
 kubectl config use-context docker-desktop
 kubectl get nodes
 ```
+<img width="1417" height="974" alt="Screenshot 2025-10-20 185822" src="https://github.com/user-attachments/assets/a3570674-014e-47bd-8718-aafd033253ee" />
 
 ### 3.2 Build image
 ```bash
 mvn -DskipTests package
 docker build -t task-api:local .
 ```
+<img width="1412" height="914" alt="Screenshot 2025-10-20 185934" src="https://github.com/user-attachments/assets/e79013ca-e900-4431-b1dd-93c5f7faa5c5" />
 
 ### 3.3 Deploy MongoDB
 ```bash
@@ -109,6 +111,7 @@ kubectl get pods
 # wait until the mongodb pod is Running
 ```
 - MongoDB uses PVC `mongodb-pvc` mounted at `/data/db`, so data persists across pod restarts.
+<img width="1441" height="870" alt="Screenshot 2025-10-20 190032" src="https://github.com/user-attachments/assets/95f84d87-b978-423c-aaad-3e4c06111cde" />
 
 ### 3.4 Deploy the application
 ```bash
@@ -120,12 +123,14 @@ kubectl get svc task-api
 - The app reads `MONGODB_URI` from Secret `mongodb-conn`.
 - The app reads `POD_NAMESPACE` via the downward API.
 - Service type is NodePort at `30081`.
+<img width="1454" height="606" alt="Screenshot 2025-10-20 193603" src="https://github.com/user-attachments/assets/ed1c73ba-9598-4143-9201-5669ec23cc38" />
 
 ### 3.5 Test from your host
 ```bash
 curl http://localhost:30081/tasks
 ```
 (Empty DB returns `[]`).
+<img width="1729" height="543" alt="Screenshot 2025-10-20 193743" src="https://github.com/user-attachments/assets/9c567ef9-7645-4fa3-992a-3c0b14156304" />
 
 Create and execute a task (runs inside a short‑lived BusyBox pod):
 ```bash
@@ -148,6 +153,8 @@ kubectl get pods
 # when mongodb is Running again:
 curl http://localhost:30081/tasks
 ```
+<img width="1316" height="505" alt="Screenshot 2025-10-20 203708" src="https://github.com/user-attachments/assets/0ecc595c-dee8-4851-8f4c-a879c54909d2" />
+
 Data should still be present because it is stored on the PVC.
 
 ### 3.7 Common troubleshooting
